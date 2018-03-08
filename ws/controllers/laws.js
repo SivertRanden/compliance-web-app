@@ -1,3 +1,11 @@
+const dalc = require("./../dao");
+
 exports.getLaws = function(req, res) {
-  res.json(["Law 1", "Law 2", "Law 3"]);
+  dalc.getLaws(function(err, rows) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.json(rows);
+    }
+  });
 };
