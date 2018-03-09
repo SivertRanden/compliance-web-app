@@ -2,9 +2,9 @@
   "name": "compliance-bachelor",
   "version": "0.0.1",
   "description": "Compliance webapplication - bachelor thesis",
-  "main": "server/index.js",
+  "main": "server/app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
