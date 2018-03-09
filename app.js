@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const dao = require("./ws/dao");
+const dao = require("./ws/dao/db.js");
 
 //Controllers
 const lawsController = require("./ws/controllers/laws");

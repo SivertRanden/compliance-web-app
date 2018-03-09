@@ -1,4 +1,4 @@
-const dalc = require("./../dao");
+const dalc = require("./../dao/db.js");
 
 exports.getLaws = function(req, res) {
   dalc.getLaws(function(err, rows) {
