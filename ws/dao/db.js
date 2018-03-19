@@ -1,5 +1,11 @@
 const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database(":memory:");
+const db = new sqlite3.Database("../../compliance_db.db", (err) => {
+  if(err) {
+    console.log(err.message);
+  } else {
+    console.log("Connected to the database!");
+  }
+});
 
 exports.initDb = function() {
   db.serialize(function() {
