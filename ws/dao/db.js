@@ -1,33 +1,16 @@
 const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database("../../compliance_db.db", (err) => {
+const path = require('path');
+
+const dbPath = path.resolve(__dirname, 'compliancedb.db');
+
+const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
   if(err) {
-    console.log(err.message);
+    console.log("ERROR" + err.message);
   } else {
     console.log("Connected to the database!");
   }
 });
 
-exports.initDb = function() {
-  db.serialize(function() {
-    // Create laws table
-    const lawsCreateStatement = `CREATE TABLE  if not exists "laws" (
-      "id"	INTEGER NOT NULL,
-      "name" TEXT NOT NULL,
-      "description"	TEXT NOT NULL,
-      PRIMARY KEY("id"))`;
-    db.run(lawsCreateStatement);
+module.exports.connection = db;
 
-    //Debug data
-    const testLaw =
-      "INSERT INTO LAWS (id,name,description) VALUES (1,'First Law', 'This is a law')";
-    db.run(testLaw);
-  });
-};
 
-exports.getLaws = function(cb) {
-  db.serialize(function() {
-    db.all("SELECT * FROM LAWS", function(err, rows) {
-      cb(err, rows);
-    });
-  });
-};

@@ -1,11 +1,11 @@
-const dalc = require("./../dao/db.js");
+const lawDao = require("./../dao/lawDao.js");
 
 exports.getLaws = function(req, res) {
-  dalc.getLaws(function(err, rows) {
+  lawDao.getAllLaws((err, row) => {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.json(rows);
+      res.json(row);
     }
   });
 };
