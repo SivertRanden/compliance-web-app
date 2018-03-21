@@ -1,4 +1,4 @@
-const lawDao = require("./../dao/lawDao.js");
+const lawDao = require("./../dao/lawDAO.js");
 
 //Gets all laws and sends all rows in response with JSON
 exports.getLaws = function(req, res) {
