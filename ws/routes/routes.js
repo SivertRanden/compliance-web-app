@@ -8,5 +8,5 @@ module.exports = function(app) {
 
   const answerController = require("../controllers/answerController");
   app.route("/answers/:answerId").get(answerController.getAnswer);
-  app.route("/answers").get(answerController.getAnswersByCategory);
+  app.route("/answers").get(answerController.getAnswersByParameter);
 };

@@ -24,3 +24,20 @@ exports.getAnswersByCategoryId = function(id, onDataReceived) {
     });
   });
 };
+
+exports.getAnswersByThemeId = function(id, onDataReceived) {
+  db.serialize(() => {
+    db.all(
+      "SELECT a.* FROM answer as a, themes_answers as ta WHERE (ta.theme_id = " +
+        id +
+        " AND a.answer_id = ta.answer_id)",
+      (err, rows) => {
+        if (err) {
+          console.log(err.message);
+        } else {
+          onDataReceived(err, rows);
+        }
+      }
+    );
+  });
+};
