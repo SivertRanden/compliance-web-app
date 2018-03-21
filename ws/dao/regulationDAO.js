@@ -11,7 +11,9 @@ exports.getRegulationById = function(id, onDataReceived) {
           console.log(err.message);
         } else {
           let combinedRows = [];
-          combinedRows.push(rows);
+          if (rows) {
+            combinedRows.push(rows);
+          }
           onDataReceived(err, combinedRows);
         }
       }
