@@ -5,7 +5,7 @@ const db = dao.connection;
 exports.getRegulationById = function(id, onDataReceived) {
   db.serialize(() => {
     db.get(
-      "SELECT r.reg_title, r.date_code FROM regulation AS r WHERE r.regulation_id = " + id,
+      "SELECT r.title, r.date_code FROM regulation AS r WHERE r.regulation_id = " + id,
       (err, rows) => {
         if (err) {
           console.log(err.message);
