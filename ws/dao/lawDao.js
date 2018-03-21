@@ -1,5 +1,4 @@
 const dao = require("./db.js");
-
 const db = dao.connection;
 
 exports.getAllLaws = function(onDataReceived) {
