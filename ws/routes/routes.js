@@ -5,5 +5,14 @@ module.exports = function(app) {
   app.route("/laws").get(lawController.getLaws);
   app.route("/laws/:lawId").get(lawController.getLaw);
 
-  app.route("/regulations/:regulation_id").get(regulationController.getRegulation);
+  app
+    .route("/regulations/:regulation_id")
+    .get(regulationController.getRegulation);
+
+  const categoryController = require("../controllers/categoryController");
+  app.route("/categories").get(categoryController.getCategories);
+
+  const answerController = require("../controllers/answerController");
+  app.route("/answers/:answerId").get(answerController.getAnswer);
+  app.route("/answers").get(answerController.getAnswersByParameter);
 };

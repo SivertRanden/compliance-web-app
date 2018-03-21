@@ -1,5 +1,4 @@
 const dao = require("./db.js");
-
 const db = dao.connection;
 
 exports.getAllLaws = function(onDataReceived) {
@@ -14,13 +13,17 @@ exports.getAllLaws = function(onDataReceived) {
   });
 };
 
+<<<<<<< HEAD
 //Gets law with id, also gets
+=======
+>>>>>>> oivind-/categories
 exports.getLawById = function(id, onDataReceived) {
   db.serialize(() => {
     db.get("SELECT * FROM law WHERE law_id = " + id, (err, row) => {
       if (err) {
         console.log(err.message);
       } else {
+<<<<<<< HEAD
         let combinedRows = [];
         if (row) {
           combinedRows.push(row);
@@ -56,6 +59,9 @@ exports.getSubsectionsByLawId = function(id, combinedRows, onDataReceived) {
       } else {
         combinedRows.push(rows);
         onDataReceived(err, combinedRows);
+=======
+        onDataReceived(err, row);
+>>>>>>> oivind-/categories
       }
     });
   });
