@@ -38,10 +38,23 @@ exports.getRegulationByLawId = function(id, combinedRows, onDataReceived) {
         if (err) {
           console.log(err.message);
         } else {
-          combinedRows = combinedRows.concat(rows);
+          combinedRows.push(rows);
           onDataReceived(err, combinedRows);
         }
       }
     );
+  });
+};
+
+exports.getSubsectionsByLawId = function(id, combinedRows, onDataReceived) {
+  db.serialize(() => {
+    db.all("SELECT * FROM sub_section WHERE law_id = " + id, combinedRows, (err, rows) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        combinedRows.push(rows);
+        onDataReceived(err, combinedRows);
+      }
+    });
   });
 };

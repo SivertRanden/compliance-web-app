@@ -21,21 +21,19 @@ exports.getLaw = function(req, res) {
     if (!combinedRows) {
       res.send("UFFAMEIEN DENNA LOVEN FINNES IKKE LOL");
     } else {
-      lawDao.getRegulationByLawId(
-        req.params.lawid,
-        combinedRows,
-        (err, combinedRows) => {
-          if (err) {
-            res.sendStatus(500);
-          } else {
-            res.json(combinedRows);
-          }
+      lawDao.getRegulationByLawId(req.params.lawId, combinedRows, (err, combinedRows) => {
+        if (err) {
+          res.sendStatus(500);
+        } else {
+          lawDao.getSubsectionsByLawId(req.params.lawId, combinedRows, (err, combinedRows) => {
+            if (err) {
+              res.sendStatus(500);
+            } else {
+              res.json(combinedRows);
+            }
+          });
         }
-      );
+      });
     }
   });
-};
-
-const callback = function(req, res, rows) {
-  res.json(rows);
 };
