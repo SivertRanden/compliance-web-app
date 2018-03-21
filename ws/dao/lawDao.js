@@ -22,7 +22,9 @@ exports.getLawById = function(id, onDataReceived) {
         console.log(err.message);
       } else {
         let combinedRows = [];
-        combinedRows.push(row);
+        if (row) {
+          combinedRows.push(row);
+        }
         onDataReceived(err, combinedRows);
       }
     });
