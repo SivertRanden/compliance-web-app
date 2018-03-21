@@ -9,3 +9,16 @@ exports.getLaws = function(req, res) {
     }
   });
 };
+
+exports.getLaw = function(req, res) {
+  lawDao.getLawById(req.params.lawId, (err, row) => {
+    if (err) {
+      res.sendStatus(500);
+    }
+    if (!row) {
+      res.send("UFFAMEIEN DENNA LOVEN FINNES IKKE LOL");
+    } else {
+      res.json(row);
+    }
+  });
+};
