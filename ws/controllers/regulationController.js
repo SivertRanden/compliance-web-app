@@ -1,14 +1,14 @@
 const regulationDao = require("./../dao/regulationDAO.js");
 
 exports.getRegulation = function(req, res) {
-  regulationDao.getRegulationById(req.params.regulation_id, (err, row) => {
+  regulationDao.getRegulationById(req.params.regulation_id, (err, rows) => {
     if (err) {
       res.sendStatus(500);
     }
-    if (!row) {
+    if (!rows) {
       res.send("UFFAMEIEN DENNA FORSKRIFTEN FINNES IKKE LOL");
     } else {
-      res.json(row);
+      res.json(rows);
     }
   });
 };
