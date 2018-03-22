@@ -13,17 +13,12 @@ exports.getAllLaws = function(onDataReceived) {
   });
 };
 
-<<<<<<< HEAD
-//Gets law with id, also gets
-=======
->>>>>>> oivind-/categories
 exports.getLawById = function(id, onDataReceived) {
   db.serialize(() => {
     db.get("SELECT * FROM law WHERE law_id = " + id, (err, row) => {
       if (err) {
         console.log(err.message);
       } else {
-<<<<<<< HEAD
         let combinedRows = [];
         if (row) {
           combinedRows.push(row);
@@ -38,7 +33,7 @@ exports.getRegulationByLawId = function(id, combinedRows, onDataReceived) {
   db.serialize(() => {
     db.all(
       `SELECT r.title FROM regulation as r, law as l, laws_regulations as lr
-      WHERE lr.law_id = 1 AND l.law_id = lr.law_id AND r.regulation_id = lr.regulation_id`,
+      WHERE lr.law_id = ` + id + ` AND l.law_id = lr.law_id AND r.regulation_id = lr.regulation_id`,
       (err, rows) => {
         if (err) {
           console.log(err.message);
@@ -59,9 +54,7 @@ exports.getSubsectionsByLawId = function(id, combinedRows, onDataReceived) {
       } else {
         combinedRows.push(rows);
         onDataReceived(err, combinedRows);
-=======
         onDataReceived(err, row);
->>>>>>> oivind-/categories
       }
     });
   });
