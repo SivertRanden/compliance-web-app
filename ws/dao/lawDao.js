@@ -61,8 +61,6 @@ exports.getSubsectionsByLawId = function(id, combinedRows, onDataReceived) {
         } else {
           combinedRows.push(rows);
           onDataReceived(err, combinedRows);
-          //SIVERT DU MÅ SE PÅ DENNE, TROR IKKE DEN SKAL VÆRE DER!!!
-          //onDataReceived(err, rows);
         }
       }
     );
