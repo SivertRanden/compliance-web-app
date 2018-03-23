@@ -54,7 +54,6 @@ exports.getSubsectionsByLawId = function(id, combinedRows, onDataReceived) {
       } else {
         combinedRows.push(rows);
         onDataReceived(err, combinedRows);
-        onDataReceived(err, row);
       }
     });
   });
