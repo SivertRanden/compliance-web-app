@@ -50,14 +50,6 @@ exports.getRegulationByLawId = function(id, combinedRows, onDataReceived) {
 
 exports.getSubsectionsByLawId = function(id, combinedRows, onDataReceived) {
   db.serialize(() => {
-<<<<<<< HEAD
-    db.all("SELECT * FROM sub_section WHERE law_id = " + id, combinedRows, (err, rows) => {
-      if (err) {
-        console.log(err.message);
-      } else {
-        combinedRows.push(rows);
-        onDataReceived(err, combinedRows);
-=======
     db.all(
       "SELECT s.title AS subTitle, s.number AS subNumber, s.type AS subType FROM sub_section as s, law as l, laws_sub_sections AS ls WHERE l.id_law = " +
         id +
@@ -70,7 +62,6 @@ exports.getSubsectionsByLawId = function(id, combinedRows, onDataReceived) {
           combinedRows.push(rows);
           onDataReceived(err, combinedRows);
         }
->>>>>>> origin/Darri-fix-queries
       }
     );
   });
