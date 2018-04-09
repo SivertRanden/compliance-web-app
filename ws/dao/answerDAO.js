@@ -15,7 +15,7 @@ exports.getAnswerById = function(id, onDataReceived) {
 
 exports.getAnswersByCategoryId = function(id, onDataReceived) {
   db.serialize(() => {
-    db.all("SELECT * FROM answer WHERE id_category = " + id, (err, rows) => {
+    db.all("SELECT * FROM answer WHERE category_id = " + id, (err, rows) => {
       if (err) {
         console.log(err.message);
       } else {
