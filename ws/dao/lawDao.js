@@ -19,15 +19,11 @@ exports.getLawById = function(id, onDataReceived) {
       if (err) {
         console.log(err.message);
       } else {
-<<<<<<< HEAD
-        onDataReceived(err, row);
-=======
         let combinedRows = [];
         if (row) {
           combinedRows.push(row);
         }
         onDataReceived(err, combinedRows);
->>>>>>> oivind-implementations
       }
     });
   });
