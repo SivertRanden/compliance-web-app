@@ -14,6 +14,7 @@ exports.getLaws = function(req, res) {
 //Gets the law with corresponding id, regulations with corresponding law id
 //and subsections with corresponding id
 exports.getLaw = function(req, res) {
+<<<<<<< HEAD
   let combinedRows = [];
   lawDao.getLawById(req.params.lawId, (err, row) => {
     if (err) {
@@ -33,6 +34,23 @@ exports.getLaw = function(req, res) {
               res.sendStatus(500);
             } else {
               combinedRows.push(rows);
+=======
+  lawDao.getLawById(req.params.lawId, (err, combinedRows) => {
+    if (err) {
+      res.sendStatus(500);
+    }
+    if (combinedRows.length === 0) {
+      res.send("UFFAMEIEN DENNA LOVEN FINNES IKKE LOL");
+    } else {
+      lawDao.getRegulationByLawId(req.params.lawId, combinedRows, (err, combinedRows) => {
+        if (err) {
+          res.sendStatus(500);
+        } else {
+          lawDao.getSubsectionsByLawId(req.params.lawId, combinedRows, (err, combinedRows) => {
+            if (err) {
+              res.sendStatus(500);
+            } else {
+>>>>>>> oivind-implementations
               res.json(combinedRows);
             }
           });

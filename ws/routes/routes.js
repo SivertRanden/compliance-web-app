@@ -19,4 +19,7 @@ module.exports = function(app) {
   const themeController = require("../controllers/themeController");
   app.route("/themes").get(themeController.getThemes);
   app.route("/themes/:themeId").get(themeController.getThemeById);
+
+  const implementationController = require("../controllers/implementationController");
+  app.route("/implementations/:implementationId").get(implementationController.getImplementation);
 };
