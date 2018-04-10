@@ -11,7 +11,11 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+<<<<<<< HEAD
     "nodemon": "^1.17.2",
+=======
+    "nodemon": "^1.17.1",
+>>>>>>> feature/subsections
     "npm": "^5.7.1",
     "path": "^0.12.7",
     "sqlite3": "^3.1.13"

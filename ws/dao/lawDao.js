@@ -15,6 +15,7 @@ exports.getAllLaws = function(onDataReceived) {
 
 exports.getLawById = function(id, onDataReceived) {
   db.serialize(() => {
+<<<<<<< HEAD
     db.get("SELECT * FROM law WHERE id_law = " + id, (err, row) => {
       if (err) {
         console.log(err.message);
@@ -24,10 +25,18 @@ exports.getLawById = function(id, onDataReceived) {
           combinedRows.push(row);
         }
         onDataReceived(err, combinedRows);
+=======
+    db.get("SELECT * FROM law WHERE law_id = " + id, (err, row) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        onDataReceived(err, row);
+>>>>>>> feature/subsections
       }
     });
   });
 };
+<<<<<<< HEAD
 
 exports.getRegulationByLawId = function(id, combinedRows, onDataReceived) {
   db.serialize(() => {
@@ -66,3 +75,5 @@ exports.getSubsectionsByLawId = function(id, combinedRows, onDataReceived) {
     );
   });
 };
+=======
+>>>>>>> feature/subsections

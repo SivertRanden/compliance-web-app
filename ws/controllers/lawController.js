@@ -11,6 +11,7 @@ exports.getLaws = function(req, res) {
   });
 };
 
+<<<<<<< HEAD
 //Gets the law with corresponding id, regulations with corresponding law id
 //and subsections with corresponding id
 exports.getLaw = function(req, res) {
@@ -42,6 +43,17 @@ exports.getLaw = function(req, res) {
           }
         }
       );
+=======
+exports.getLaw = function(req, res) {
+  lawDao.getLawById(req.params.lawId, (err, row) => {
+    if (err) {
+      res.sendStatus(500);
+    }
+    if (!row) {
+      res.send("UFFAMEIEN DENNA LOVEN FINNES IKKE LOL");
+    } else {
+      res.json(row);
+>>>>>>> feature/subsections
     }
   });
 };
