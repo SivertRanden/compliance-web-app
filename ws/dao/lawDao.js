@@ -15,7 +15,7 @@ exports.getAllLaws = function(onDataReceived) {
 
 exports.getLawById = function(id, onDataReceived) {
   db.serialize(() => {
-    db.get("SELECT * FROM law WHERE law_id = " + id, (err, row) => {
+    db.get("SELECT * FROM law WHERE id_law = " + id, (err, row) => {
       if (err) {
         console.log(err.message);
       } else {
