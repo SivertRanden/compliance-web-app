@@ -12,9 +12,10 @@ module.exports = function(app) {
   const answerController = require("../controllers/answerController");
   app.route("/answers/:answerId").get(answerController.getAnswer);
   app.route("/answers").get(answerController.getAnswersByParameter);
-  const subsectionController = require("../controllers/subsectionController");
 
-  app
-    .route("/subsections/:subsectionId")
-    .get(subsectionController.getSubsection);
+  const subsectionController = require("../controllers/subsectionController");
+  app.route("/subsections/:subsectionId").get(subsectionController.getSubsection);
+
+  const implementationController = require("../controllers/implementationController");
+  app.route("/implementations/:implementationId").get(implementationController.getImplementation);
 };
