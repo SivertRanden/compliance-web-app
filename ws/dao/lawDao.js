@@ -13,3 +13,15 @@ exports.getAllLaws = function(onDataReceived) {
     });
   });
 };
+
+exports.getLawById = function(id, onDataReceived) {
+  db.serialize(() => {
+    db.get("SELECT * FROM law WHERE law_id = " + id, (err, row) => {
+      if (err) {
+        console.log(err.message);
+      } else {
+        onDataReceived(err, row);
+      }
+    });
+  });
+};
