@@ -12,9 +12,11 @@ module.exports = function(app) {
   const answerController = require("../controllers/answerController");
   app.route("/answers/:answerId").get(answerController.getAnswer);
   app.route("/answers").get(answerController.getAnswersByParameter);
-  const subsectionController = require("../controllers/subsectionController");
 
-  app
-    .route("/subsections/:subsectionId")
-    .get(subsectionController.getSubsection);
+  const subsectionController = require("../controllers/subsectionController");
+  app.route("/subsections/:subsectionId").get(subsectionController.getSubsection);
+
+  const themeController = require("../controllers/themeController");
+  app.route("/themes").get(themeController.getThemes);
+  app.route("/themes/:themeId").get(themeController.getThemeById);
 };
