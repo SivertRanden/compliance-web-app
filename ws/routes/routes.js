@@ -12,4 +12,8 @@ module.exports = function(app) {
   const answerController = require("../controllers/answerController");
   app.route("/answers/:answerId").get(answerController.getAnswer);
   app.route("/answers").get(answerController.getAnswersByParameter);
+
+  const themeController = require("../controllers/themeController");
+  app.route("/themes").get(themeController.getThemes);
+  app.route("/themes/:themeId").get(themeController.getThemeById);
 };

@@ -14,34 +14,30 @@ exports.getLaws = function(req, res) {
 //Gets the law with corresponding id, regulations with corresponding law id
 //and subsections with corresponding id
 exports.getLaw = function(req, res) {
-  lawDao.getLawById(req.params.lawId, (err, combinedRows) => {
+  let combinedRows = [];
+  lawDao.getLawById(req.params.lawId, (err, row) => {
     if (err) {
       res.sendStatus(500);
     }
-    if (combinedRows.length === 0) {
+    if (!row) {
       res.send("UFFAMEIEN DENNA LOVEN FINNES IKKE LOL");
     } else {
-      lawDao.getRegulationByLawId(
-        req.params.lawId,
-        combinedRows,
-        (err, combinedRows) => {
-          if (err) {
-            res.sendStatus(500);
-          } else {
-            lawDao.getSubsectionsByLawId(
-              req.params.lawId,
-              combinedRows,
-              (err, combinedRows) => {
-                if (err) {
-                  res.sendStatus(500);
-                } else {
-                  res.json(combinedRows);
-                }
-              }
-            );
-          }
+      combinedRows.push(row);
+      lawDao.getRegulationByLawId(req.params.lawId, (err, rows) => {
+        if (err) {
+          res.sendStatus(500);
+        } else {
+          combinedRows.push(rows);
+          lawDao.getSubsectionsByLawId(req.params.lawId, (err, rows) => {
+            if (err) {
+              res.sendStatus(500);
+            } else {
+              combinedRows.push(rows);
+              res.json(combinedRows);
+            }
+          });
         }
-      );
+      });
     }
   });
 };
