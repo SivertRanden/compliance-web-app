@@ -7,40 +7,31 @@ exports.getSubsection = function(req, res) {
       res.sendStatus(500);
     }
     if (!row) {
-      res.send("This subsection does not exist!!!");
+      res.sendStatus(404);
     } else {
       combinedRows.push(row);
-      subsectionDAO.getRegulationBySubsectionId(
-        req.params.subsectionId,
-        (err, rows) => {
-          if (err) {
-            res.sendStatus(500);
-          } else {
-            combinedRows.push(rows);
-            subsectionDAO.getLawBySubsectionId(
-              req.params.subsectionId,
-              (err, rows) => {
+      subsectionDAO.getRegulationBySubsectionId(req.params.subsectionId, (err, rows) => {
+        if (err) {
+          res.sendStatus(500);
+        } else {
+          combinedRows.push(rows);
+          subsectionDAO.getLawBySubsectionId(req.params.subsectionId, (err, rows) => {
+            if (err) {
+              res.sendStatus(500);
+            } else {
+              combinedRows.push(rows);
+              subsectionDAO.getThemesBySubsectionId(req.params.subsectionId, (err, rows) => {
                 if (err) {
                   res.sendStatus(500);
                 } else {
                   combinedRows.push(rows);
-                  subsectionDAO.getThemesBySubsectionId(
-                    req.params.subsectionId,
-                    (err, rows) => {
-                      if (err) {
-                        res.sendStatus(500);
-                      } else {
-                        combinedRows.push(rows);
-                        res.json(combinedRows);
-                      }
-                    }
-                  );
+                  res.json(combinedRows);
                 }
-              }
-            );
-          }
+              });
+            }
+          });
         }
-      );
+      });
     }
   });
 };

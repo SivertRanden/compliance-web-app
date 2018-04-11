@@ -20,7 +20,7 @@ exports.getLaw = function(req, res) {
       res.sendStatus(500);
     }
     if (!row) {
-      res.send("UFFAMEIEN DENNA LOVEN FINNES IKKE LOL");
+      res.sendStatus(404);
     } else {
       combinedRows.push(row);
       lawDao.getRegulationByLawId(req.params.lawId, (err, rows) => {

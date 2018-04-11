@@ -20,7 +20,7 @@ exports.getThemeById = function(req, res) {
       res.sendStatus(500);
     }
     if (!row) {
-      res.send("UFFAMEIEN DETTE TEMAET FINNES IKKE LOL!");
+      res.sendStatus(404);
     } else {
       combinedRows.push(row);
       themeDAO.getLawsByThemeId(themeId, (err, rows) => {
