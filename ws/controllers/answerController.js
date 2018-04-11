@@ -6,7 +6,7 @@ exports.getAnswer = function(req, res) {
       res.sendStatus(500);
     }
     if (!row) {
-      res.send("Svar med angitt id finnes ikke.");
+      res.sendStatus(404);
     } else {
       res.json(row);
     }
