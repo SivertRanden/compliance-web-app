@@ -20,7 +20,7 @@ exports.getSubsectionByID = function(id, onDataReceived) {
 exports.getRegulationBySubsectionId = function(id, onDataReceived) {
   db.serialize(() => {
     db.all(
-      "SELECT r.title as regtitle FROM sub_section as s, regulation as r, regulations_sub_sections as rs WHERE s.id_sub_section = " +
+      "SELECT r.* FROM sub_section as s, regulation as r, regulations_sub_sections as rs WHERE s.id_sub_section = " +
         id +
         " AND rs.sub_section_id = s.id_sub_section AND rs.regulation_id = r.id_regulation",
       (err, rows) => {
@@ -37,7 +37,7 @@ exports.getRegulationBySubsectionId = function(id, onDataReceived) {
 exports.getLawBySubsectionId = function(id, onDataReceived) {
   db.serialize(() => {
     db.all(
-      "SELECT l.title as lawtitle FROM sub_section as s, law as l, laws_sub_sections as ls WHERE s.id_sub_section = " +
+      "SELECT l.* FROM sub_section as s, law as l, laws_sub_sections as ls WHERE s.id_sub_section = " +
         id +
         " AND ls.sub_section_id = s.id_sub_section AND ls.law_id = l.id_law",
       (err, rows) => {
