@@ -19,11 +19,7 @@ exports.getLawById = function(id, onDataReceived) {
       if (err) {
         console.log(err.message);
       } else {
-        let combinedRows = [];
-        if (row) {
-          combinedRows.push(row);
-        }
-        onDataReceived(err, combinedRows);
+        onDataReceived(err, row);
       }
     });
   });

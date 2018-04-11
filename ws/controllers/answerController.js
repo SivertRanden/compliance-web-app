@@ -36,21 +36,6 @@ exports.getAnswersByParameter = function(req, res) {
         res.json(rows);
       }
     });
-  } else if (req.query.categoryId && req.query.themeId) {
-    answerDao.getAnswersByCategoryIdAndThemeId(
-      req.query.categoryId,
-      req.query.themeId,
-      (err, rows) => {
-        if (err) {
-          res.sendStatus(500);
-        }
-        if (!rows) {
-          res.send("Det finnes ingen svar i aktuelt tema.");
-        } else {
-          res.json(rows);
-        }
-      }
-    );
   } else {
     res.send("Det finnes ingen data med angitt parameter.");
   }
