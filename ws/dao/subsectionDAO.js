@@ -54,7 +54,7 @@ exports.getLawBySubsectionId = function(id, onDataReceived) {
 exports.getThemesBySubsectionId = function(id, onDataReceived) {
   db.serialize(() => {
     db.all(
-      "SELECT t.short_title FROM theme as t, sub_section as s, themes_sub_sections as ts WHERE s.id_sub_section = " +
+      "SELECT t.* FROM theme as t, sub_section as s, themes_sub_sections as ts WHERE s.id_sub_section = " +
         id +
         " AND s.id_sub_section = ts.sub_section_id AND t.id_theme = ts.theme_id ",
       (err, rows) => {
