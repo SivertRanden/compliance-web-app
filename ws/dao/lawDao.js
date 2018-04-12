@@ -28,7 +28,7 @@ exports.getLawById = function(id, onDataReceived) {
 exports.getRegulationByLawId = function(id, onDataReceived) {
   db.serialize(() => {
     db.all(
-      `SELECT r.title FROM regulation as r, law as l, laws_regulations as lr
+      `SELECT r.* FROM regulation as r, law as l, laws_regulations as lr
       WHERE lr.law_id = ` +
         id +
         ` AND l.id_law = lr.law_id AND r.id_regulation = lr.regulation_id`,

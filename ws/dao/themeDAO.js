@@ -82,7 +82,7 @@ exports.getAnswersByThemeId = function(id, onDataReceived) {
 exports.getImplementationsByThemeId = function(id, onDataReceived) {
   db.serialize(() => {
     db.all(
-      `SELECT i.id_implementation FROM implementation as i, theme as t
+      `SELECT i.* FROM implementation as i, theme as t
       WHERE t.id_theme = ` +
         id +
         ` AND t.id_theme = i.theme_id`,
