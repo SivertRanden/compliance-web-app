@@ -12,6 +12,7 @@ exports.getRegulationById = function(id, onDataReceived) {
         if (err) {
           //throw new Error("Det skjedde feil i spørringa");
           console.log("DARRI SE HER, EG ER INNI DEN GREIA HER LOL");
+          return onDataReceived(new Error("Help me Obi-Wan Kenobi, you're our only hope"));
           //console.log(err.message);
         } else {
           let combinedRows = [];

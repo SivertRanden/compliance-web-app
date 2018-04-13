@@ -3,7 +3,9 @@ const regulationDao = require("./../dao/regulationDAO.js");
 exports.getRegulation = function(req, res) {
   regulationDao.getRegulationById(req.params.regulation_id, (err, combinedRows) => {
     if (err) {
-      res.sendStatus(500);
+      res.sendStatus(503);
+      console.log(err.message);
+      return;
     }
     if (combinedRows.length === 0) {
       res.sendStatus(404);
