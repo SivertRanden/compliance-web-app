@@ -5,6 +5,8 @@ exports.getThemes = function(req, res) {
   themeDAO.getAllThemes((err, rows) => {
     if (err) {
       res.sendStatus(500);
+      console.log(err.message);
+      return;
     } else {
       res.json(rows);
     }
@@ -18,6 +20,8 @@ exports.getThemeById = function(req, res) {
   themeDAO.getThemeById(themeId, (err, row) => {
     if (err) {
       res.sendStatus(500);
+      console.log(err.message);
+      return;
     }
     if (!row) {
       res.sendStatus(404);
@@ -26,21 +30,29 @@ exports.getThemeById = function(req, res) {
       themeDAO.getLawsByThemeId(themeId, (err, rows) => {
         if (err) {
           res.sendStatus(500);
+          console.log(err.message);
+          return;
         } else {
           combinedRows.push(rows);
           themeDAO.getRegulationsByThemeId(themeId, (err, rows) => {
             if (err) {
               res.sendStatus(500);
+              console.log(err.message);
+              return;
             }
             combinedRows.push(rows);
             themeDAO.getAnswersByThemeId(themeId, (err, rows) => {
               if (err) {
                 res.sendStatus(500);
+                console.log(err.message);
+                return;
               }
               combinedRows.push(rows);
               themeDAO.getImplementationsByThemeId(themeId, (err, rows) => {
                 if (err) {
                   res.sendStatus(500);
+                  console.log(err.message);
+                  return;
                 }
                 combinedRows.push(rows);
                 res.json(combinedRows);

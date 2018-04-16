@@ -5,6 +5,8 @@ exports.getLaws = function(req, res) {
   lawDao.getAllLaws((err, rows) => {
     if (err) {
       res.sendStatus(500);
+      console.log(err.message);
+      return;
     } else {
       res.json(rows);
     }
@@ -18,6 +20,8 @@ exports.getLaw = function(req, res) {
   lawDao.getLawById(req.params.lawId, (err, row) => {
     if (err) {
       res.sendStatus(500);
+      console.log(err.message);
+      return;
     }
     if (!row) {
       res.sendStatus(404);
@@ -26,11 +30,15 @@ exports.getLaw = function(req, res) {
       lawDao.getRegulationByLawId(req.params.lawId, (err, rows) => {
         if (err) {
           res.sendStatus(500);
+          console.log(err.message);
+          return;
         } else {
           combinedRows.push(rows);
           lawDao.getSubsectionsByLawId(req.params.lawId, (err, rows) => {
             if (err) {
               res.sendStatus(500);
+              console.log(err.message);
+              return;
             } else {
               combinedRows.push(rows);
               res.json(combinedRows);

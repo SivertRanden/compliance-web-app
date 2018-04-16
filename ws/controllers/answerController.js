@@ -4,6 +4,8 @@ exports.getAnswer = function(req, res) {
   answerDao.getAnswerById(req.params.answerId, (err, row) => {
     if (err) {
       res.sendStatus(500);
+      console.log(err.message);
+      return;
     }
     if (!row) {
       res.sendStatus(404);
@@ -18,6 +20,8 @@ exports.getAnswersByParameter = function(req, res) {
     answerDao.getAnswersByCategoryId(req.query.categoryId, (err, rows) => {
       if (err) {
         res.sendStatus(500);
+        console.log(err.message);
+        return;
       }
       if (!rows) {
         res.send("Det finnes ingen svar i aktuell kategori.");
@@ -29,6 +33,8 @@ exports.getAnswersByParameter = function(req, res) {
     answerDao.getAnswersByThemeId(req.query.themeId, (err, rows) => {
       if (err) {
         res.sendStatus(500);
+        console.log(err.message);
+        return;
       }
       if (!rows) {
         res.send("Det finnes ingen svar i aktuelt tema.");

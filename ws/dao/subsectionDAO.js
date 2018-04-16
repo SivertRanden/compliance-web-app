@@ -4,16 +4,13 @@ const db = dao.connection;
 
 exports.getSubsectionByID = function(id, onDataReceived) {
   db.serialize(() => {
-    db.get(
-      "SELECT * FROM sub_section as s WHERE s.id_sub_section = " + id,
-      (err, row) => {
-        if (err) {
-          console.log(err.message);
-        } else {
-          onDataReceived(err, row);
-        }
+    db.get("SELECT * FROM sub_section as s WHERE s.id_sub_section = " + id, (err, row) => {
+      if (err) {
+        return onCallBack(err);
+      } else {
+        onDataReceived(err, row);
       }
-    );
+    });
   });
 };
 
@@ -25,7 +22,7 @@ exports.getRegulationBySubsectionId = function(id, onDataReceived) {
         " AND rs.sub_section_id = s.id_sub_section AND rs.regulation_id = r.id_regulation",
       (err, rows) => {
         if (err) {
-          console.log(err.message);
+          return onDataReceived(err);
         } else {
           onDataReceived(err, rows);
         }
@@ -42,7 +39,7 @@ exports.getLawBySubsectionId = function(id, onDataReceived) {
         " AND ls.sub_section_id = s.id_sub_section AND ls.law_id = l.id_law",
       (err, rows) => {
         if (err) {
-          console.log(err.message);
+          return onCallBack(err);
         } else {
           onDataReceived(err, rows);
         }
@@ -59,7 +56,7 @@ exports.getThemesBySubsectionId = function(id, onDataReceived) {
         " AND s.id_sub_section = ts.sub_section_id AND t.id_theme = ts.theme_id ",
       (err, rows) => {
         if (err) {
-          console.log(err.message);
+          return onCallBack(err);
         } else {
           onDataReceived(err, rows);
         }
