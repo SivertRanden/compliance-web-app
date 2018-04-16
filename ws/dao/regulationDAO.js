@@ -2,6 +2,8 @@ const dao = require("./db.js");
 
 const db = dao.connection;
 
+//Query the database for a regulation with a given ID and every
+//regulation + subsection connected with that regulation
 exports.getRegulationById = function(id, onDataReceived) {
   db.serialize(() => {
     db.get(
@@ -11,8 +13,8 @@ exports.getRegulationById = function(id, onDataReceived) {
       (err, rows) => {
         if (err) {
           //throw new Error("Det skjedde feil i spørringa");
-          console.log("DARRI SE HER, EG ER INNI DEN GREIA HER LOL");
-          return onDataReceived(new Error("Help me Obi-Wan Kenobi, you're our only hope"));
+          //console.log("DARRI SE HER, EG ER INNI DEN GREIA HER LOL");
+          return onDataReceived(err);
           //console.log(err.message);
         } else {
           let combinedRows = [];
@@ -34,7 +36,7 @@ exports.getSubsectionsByRegulationId = function(id, combinedRows, onDataReceived
         " AND r.id_regulation = rs.regulation_id AND s.id_sub_section = rs.sub_section_id",
       (err, rows) => {
         if (err) {
-          console.log(err.message);
+          return onDataReceived(err);
         } else {
           combinedRows.push(rows);
           onDataReceived(err, combinedRows);

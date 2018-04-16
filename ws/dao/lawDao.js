@@ -5,7 +5,7 @@ exports.getAllLaws = function(onDataReceived) {
   db.serialize(() => {
     db.all("SELECT * FROM law", (err, rows) => {
       if (err) {
-        console.log(err.message);
+        return onDataReceived(err);
       } else {
         onDataReceived(err, rows);
       }
@@ -17,7 +17,7 @@ exports.getLawById = function(id, onDataReceived) {
   db.serialize(() => {
     db.get("SELECT * FROM law WHERE id_law = " + id, (err, row) => {
       if (err) {
-        console.log(err.message);
+        return onDataReceived(err);
       } else {
         onDataReceived(err, row);
       }
@@ -34,7 +34,7 @@ exports.getRegulationByLawId = function(id, onDataReceived) {
         ` AND l.id_law = lr.law_id AND r.id_regulation = lr.regulation_id`,
       (err, rows) => {
         if (err) {
-          console.log(err.message);
+          return onDataReceived(err);
         } else {
           onDataReceived(err, rows);
         }
@@ -51,7 +51,7 @@ exports.getSubsectionsByLawId = function(id, onDataReceived) {
         " AND l.id_law = ls.law_id AND s.id_sub_section = ls.sub_section_id",
       (err, rows) => {
         if (err) {
-          console.log(err.message);
+          return onDataReceived(err);
         } else {
           onDataReceived(err, rows);
         }

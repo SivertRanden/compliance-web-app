@@ -4,6 +4,8 @@ exports.getCategories = function(req, res) {
   categoryDao.getAllCategories((err, rows) => {
     if (err) {
       res.sendStatus(500);
+      console.log(err.message);
+      return;
     } else {
       res.json(rows);
     }

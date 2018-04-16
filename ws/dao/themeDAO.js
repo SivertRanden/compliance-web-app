@@ -5,7 +5,7 @@ exports.getAllThemes = function(onDataReceived) {
   db.serialize(() => {
     db.all("SELECT * FROM theme", (err, rows) => {
       if (err) {
-        console.log(err.message);
+        return onDataReceived(err);
       } else {
         onDataReceived(err, rows);
       }
@@ -17,7 +17,7 @@ exports.getThemeById = function(id, onDataReceived) {
   db.serialize(() => {
     db.get("SELECT * FROM theme WHERE id_theme = " + id, (err, row) => {
       if (err) {
-        console.log(err.message);
+        return onDataReceived(err);
       } else {
         onDataReceived(err, row);
       }
@@ -34,7 +34,7 @@ exports.getLawsByThemeId = function(id, onDataReceived) {
         ` AND l.id_law = ls.law_id AND ls.sub_section_id = ts.sub_section_id AND ts.theme_id = t.id_theme`,
       (err, rows) => {
         if (err) {
-          console.log(err.message);
+          return onDataReceived(err);
         } else {
           onDataReceived(err, rows);
         }
@@ -52,7 +52,7 @@ exports.getRegulationsByThemeId = function(id, onDataReceived) {
         ` AND r.id_regulation = rs.regulation_id AND ts.theme_id = t.id_theme AND rs.sub_section_id = ts.sub_section_id`,
       (err, rows) => {
         if (err) {
-          console.log(err.message);
+          return onDataReceived(err);
         } else {
           onDataReceived(err, rows);
         }
@@ -70,7 +70,7 @@ exports.getAnswersByThemeId = function(id, onDataReceived) {
         ` AND a.id_answer = ta.answer_id AND t.id_theme = ta.theme_id;`,
       (err, rows) => {
         if (err) {
-          console.log(err);
+          return onDataReceived(err);
         } else {
           onDataReceived(err, rows);
         }
@@ -88,7 +88,7 @@ exports.getImplementationsByThemeId = function(id, onDataReceived) {
         ` AND t.id_theme = i.theme_id`,
       (err, rows) => {
         if (err) {
-          console.log(err);
+          return onDataReceived(err);
         } else {
           onDataReceived(err, rows);
         }
