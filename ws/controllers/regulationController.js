@@ -6,7 +6,7 @@ exports.getRegulation = function(req, res) {
       res.sendStatus(500);
     }
     if (combinedRows.length === 0) {
-      res.send("UFFAMEIEN DENNA FORSKRIFTEN FINNES IKKE LOL");
+      res.sendStatus(404);
     } else {
       regulationDao.getSubsectionsByRegulationId(
         req.params.regulation_id,
