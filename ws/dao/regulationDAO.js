@@ -3,7 +3,7 @@ const dao = require("./db.js");
 const db = dao.connection;
 
 //Query the database for a regulation with a given ID and every
-//regulation + subsection connected with that regulation
+//regulation + subsection connected to that regulation
 exports.getRegulationById = function(id, onDataReceived) {
   db.serialize(() => {
     db.get(
