@@ -2,6 +2,8 @@ const regulationDao = require("./../dao/regulationDAO.js");
 
 //Show a regulation with a given ID + every
 //subsection and law connected with that regulation
+
+//NU SKAL EG FAEN MEG GÅ HELT MONGO HER
 exports.getRegulation = function(req, res) {
   regulationDao.getRegulationById(req.params.regulation_id, (err, combinedRows) => {
     if (err) {
