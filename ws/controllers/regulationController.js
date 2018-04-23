@@ -5,30 +5,51 @@ const regulationDao = require("./../dao/regulationDAO.js");
 
 //NU SKAL EG FAEN MEG GÅ HELT MONGO HER
 exports.getRegulation = function(req, res) {
-  regulationDao.getRegulationById(req.params.regulation_id, (err, combinedRows) => {
-    if (err) {
-      res.sendStatus(500);
-      console.log(err.message);
-      return;
-    }
-    if (combinedRows.length === 0) {
-      res.sendStatus(404);
-    } else {
-      regulationDao.getSubsectionsByRegulationId(
-        req.params.regulation_id,
-        combinedRows,
-        (err, combinedRows) => {
-          if (err) {
-            res.sendStatus(500);
-          } else {
-            res.json(combinedRows);
-          }
-        }
-      );
-    }
-  });
+  let combinedRows = [];
+  regulationDao
+    .getRegulationById(req.params.regulation_id, combinedRows)
+    .then(function(combinedRows) {
+      console.log(combinedRows.length);
+    })
+    .then(
+      regulationDao
+        .getSubsectionsByRegulationId(req.params.regulation_id, combinedRows)
+        .then(function(combinedRows) {
+          console.log(combinedRows.length);
+        })
+        .catch(function(err) {
+          console.log(err.message);
+          return;
+        })
+    );
 };
 
-const callback = function(req, res, rows) {
-  res.json(rows);
-};
+/* 
+    .then(function(combinedRows) {
+      //combinedRows.push(rows);
+      res.json(combinedRows);
+      console.log("SUG EN HESTEKUKK");
+    })
+    .catch(function(err) {
+      res.sendStatus(500);
+      console.log("FØKK MY LIFE");
+      return;
+    })
+    .then(
+      regulationDao
+        .getSubsectionsByRegulationId(req.params.regulation_id, combinedRows)
+        .then(function(combinedRows) {
+          //combinedRows.push(rows);
+          //console.log(combinedRows.length);
+          res.json(combinedRows);
+          console.log("SUG PIKK");
+        })
+        .catch(function(err) {
+          res.sendStatus(500);
+          console.log(err.message);
+          return;
+        })
+    )
+    .catch(function(err) {
+      console.log(err.message);
+    }); */
