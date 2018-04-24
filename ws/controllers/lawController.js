@@ -23,15 +23,17 @@ exports.getLaw = function(req, res) {
     .then(function(rows) {
       combinedRows.push(rows);
     })
-    .then(lawDao.getRegulationByLawId(req.params.lawId))
-    .then(function(rows) {
-      combinedRows.push(rows);
-    })
-    .then(lawDao.getSubsectionsByLawId(req.params.lawId))
-    .then(function(rows) {
-      combinedRows.push(rows);
-      res.json(combinedRows);
-    })
+    .then(
+      lawDao.getRegulationByLawId(req.params.lawId).then(function(rows) {
+        combinedRows.push(rows);
+      })
+    )
+    .then(
+      lawDao.getSubsectionsByLawId(req.params.lawId).then(function(rows) {
+        combinedRows.push(rows);
+        res.json(combinedRows);
+      })
+    )
     .catch(function(err) {
       res.sendStatus(500);
       console.log(err.message);
