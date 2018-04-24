@@ -1,13 +1,14 @@
 const categoryDao = require("./../dao/categoryDAO.js");
 
 exports.getCategories = function(req, res) {
-  categoryDao.getAllCategories((err, rows) => {
-    if (err) {
+  categoryDao
+    .getAllCategories()
+    .then(function(rows) {
+      res.json(rows);
+    })
+    .catch(function(err) {
       res.sendStatus(500);
       console.log(err.message);
       return;
-    } else {
-      res.json(rows);
-    }
-  });
+    });
 };
