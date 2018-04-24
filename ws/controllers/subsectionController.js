@@ -14,25 +14,25 @@ exports.getSubsection = function(req, res) {
         .then(function(rows) {
           combinedRows.push(rows);
         })
-        .then(
-          subsectionDAO
-            .getRegulationBySubsectionId(req.params.subsectionId)
-            .then(function(rows) {
-              combinedRows.push(rows);
-            })
-            .then(
-              subsectionDAO
-                .getThemesBySubsectionId(req.params.subsectionId)
-                .then(function(rows) {
-                  combinedRows.push(rows);
-                  res.json(combinedRows);
-                })
-                .catch(function(err) {
-                  res.sendStatus(500);
-                  console.log(err.message);
-                  return;
-                })
-            )
-        )
+    )
+    .then(
+      subsectionDAO
+        .getRegulationBySubsectionId(req.params.subsectionId)
+        .then(function(rows) {
+          combinedRows.push(rows);
+        })
+    )
+    .then(
+      subsectionDAO
+        .getThemesBySubsectionId(req.params.subsectionId)
+        .then(function(rows) {
+          combinedRows.push(rows);
+          res.json(combinedRows);
+        })
+        .catch(function(err) {
+          res.sendStatus(500);
+          console.log(err.message);
+          return;
+        })
     );
 };
