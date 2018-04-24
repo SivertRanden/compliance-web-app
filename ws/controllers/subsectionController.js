@@ -1,45 +1,38 @@
 const subsectionDAO = require("./../dao/subsectionDAO.js");
 
+//Show a regulation with a given ID + connected theme and law/regulation
 exports.getSubsection = function(req, res) {
   let combinedRows = [];
-  subsectionDAO.getSubsectionByID(req.params.subsectionId, (err, row) => {
-    if (err) {
-      res.sendStatus(500);
-      console.log(err.message);
-      return;
-    }
-    if (!row) {
-      res.sendStatus(404);
-    } else {
-      combinedRows.push(row);
-      subsectionDAO.getRegulationBySubsectionId(req.params.subsectionId, (err, rows) => {
-        if (err) {
-          res.sendStatus(500);
-          console.log(err.message);
-          return;
-        } else {
+  subsectionDAO
+    .getSubsectionByID(req.params.subsectionId)
+    .then(function(rows) {
+      combinedRows.push(rows);
+    })
+    .then(
+      subsectionDAO
+        .getLawBySubsectionId(req.params.subsectionId)
+        .then(function(rows) {
           combinedRows.push(rows);
-          subsectionDAO.getLawBySubsectionId(req.params.subsectionId, (err, rows) => {
-            if (err) {
-              res.sendStatus(500);
-              console.log(err.message);
-              return;
-            } else {
+        })
+        .then(
+          subsectionDAO
+            .getRegulationBySubsectionId(req.params.subsectionId)
+            .then(function(rows) {
               combinedRows.push(rows);
-              subsectionDAO.getThemesBySubsectionId(req.params.subsectionId, (err, rows) => {
-                if (err) {
+            })
+            .then(
+              subsectionDAO
+                .getThemesBySubsectionId(req.params.subsectionId)
+                .then(function(rows) {
+                  combinedRows.push(rows);
+                  res.json(combinedRows);
+                })
+                .catch(function(err) {
                   res.sendStatus(500);
                   console.log(err.message);
                   return;
-                } else {
-                  combinedRows.push(rows);
-                  res.json(combinedRows);
-                }
-              });
-            }
-          });
-        }
-      });
-    }
-  });
+                })
+            )
+        )
+    );
 };
