@@ -21,5 +21,5 @@ module.exports = function(app) {
   app.route("/themes/:themeId").get(themeController.getThemeById);
 
   const implementationController = require("../controllers/implementationController");
-  app.route("/implementations/:implementationId").get(implementationController.getImplementation);
+  app.route("/implementations").get(implementationController.getImplementation);
 };
