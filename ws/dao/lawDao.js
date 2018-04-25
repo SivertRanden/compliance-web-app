@@ -19,11 +19,11 @@ exports.getAllLaws = function() {
 exports.getLawById = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.get("SELECT * FROM law WHERE id_law = " + id, (err, rows) => {
+      db.get("SELECT * FROM law WHERE id_law = " + id, (err, row) => {
         if (err) {
           reject(err);
         } else {
-          resolve(rows);
+          resolve(row);
         }
       });
     });
@@ -34,7 +34,7 @@ exports.getLawById = function(id) {
 exports.getRegulationByLawId = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.get(
+      db.all(
         `SELECT r.* FROM regulation as r, law as l, laws_regulations as lr
       WHERE lr.law_id = ` +
           id +
@@ -55,7 +55,7 @@ exports.getRegulationByLawId = function(id) {
 exports.getSubsectionsByLawId = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.get(
+      db.all(
         "SELECT s.* FROM sub_section as s, law as l, laws_sub_sections AS ls WHERE l.id_law = " +
           id +
           " AND l.id_law = ls.law_id AND s.id_sub_section = ls.sub_section_id",

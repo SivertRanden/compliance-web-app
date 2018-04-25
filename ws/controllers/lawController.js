@@ -20,8 +20,8 @@ exports.getLaw = function(req, res) {
   let combinedRows = [];
   lawDao
     .getLawById(req.params.lawId)
-    .then(function(rows) {
-      combinedRows.push(rows);
+    .then(function(row) {
+      combinedRows.push(row);
     })
     .then(
       lawDao.getRegulationByLawId(req.params.lawId).then(function(rows) {
