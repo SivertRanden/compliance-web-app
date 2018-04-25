@@ -20,7 +20,7 @@ exports.getImplementation = function(req, res) {
     )
     .catch(function(err) {
       res.sendStatus(500);
-      concole.log(err.message);
+      console.log(err.message);
       return;
     });
 };
