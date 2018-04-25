@@ -18,7 +18,7 @@ exports.getAnswersByParameter = function(req, res) {
     answerDao
       .getAnswersByCategoryId(req.query.categoryId)
       .then(function(rows) {
-        if (rows) {
+        if (!rows) {
           res.send("Det finnes ingen svar i aktuell kategori.");
           return;
         } else {
