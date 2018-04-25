@@ -20,8 +20,8 @@ exports.getLawById = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.get("SELECT * FROM law WHERE id_law = " + escape(id), (err, row) => {
-        if (err) {
-          reject(err);
+        if (err || !row) {
+          reject(new Error("DAO ERROR"));
         } else {
           resolve(row);
         }

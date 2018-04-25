@@ -2,22 +2,17 @@ const regulationDao = require("./../dao/regulationDAO.js");
 
 //Show a regulation with a given ID + every
 //subsection and law connected with that regulation
-exports.getRegulation = function(req, res) {
+exports.getRegulation = async function(req, res) {
   let combinedRows = [];
-  regulationDao
-    .getRegulationById(req.params.regulation_id)
-    .then(function(rows) {
-      combinedRows.push(rows);
-    })
-    .then(
-      regulationDao.getSubsectionsByRegulationId(req.params.regulation_id).then(function(rows) {
-        combinedRows.push(rows);
-        res.json(combinedRows);
-      })
-    )
-    .catch(function(err) {
-      res.sendStatus(500);
-      console.log(err.message);
-      return;
-    });
+
+  try {
+    combinedRows.push(await regulationDao.getRegulationById(req.params.regulation_id));
+    combinedRows.push(await regulationDao.getSubsectionsByRegulationId(req.params.regulation_id));
+    res.json(combinedRows);
+  } catch (err) {
+    res.sendStatus(404);
+    console.log(err.message);
+  }
+
+  return;
 };

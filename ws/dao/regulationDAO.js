@@ -11,8 +11,8 @@ exports.getRegulationById = function(id) {
           escape(id) +
           " AND l.id_law = lr.law_id AND r.id_regulation = lr.regulation_id",
         (err, rows) => {
-          if (err) {
-            reject(err.message);
+          if (err || !rows) {
+            reject(new Error("DAO ERROR"));
           } else {
             resolve(rows);
           }

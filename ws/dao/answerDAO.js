@@ -4,16 +4,13 @@ const db = dao.connection;
 exports.getAnswerById = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.get(
-        "SELECT * FROM answer WHERE id_answer = " + escape(id),
-        (err, rows) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(rows);
-          }
+      db.get("SELECT * FROM answer WHERE id_answer = " + escape(id), (err, rows) => {
+        if (err || !rows) {
+          reject(new Error("DAO ERROR"));
+        } else {
+          resolve(rows);
         }
-      );
+      });
     });
   });
   return promise;
@@ -22,16 +19,13 @@ exports.getAnswerById = function(id) {
 exports.getAnswersByCategoryId = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.all(
-        "SELECT * FROM answer WHERE category_id = " + escape(id),
-        (err, rows) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(rows);
-          }
+      db.all("SELECT * FROM answer WHERE category_id = " + escape(id), (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
         }
-      );
+      });
     });
   });
   return promise;
