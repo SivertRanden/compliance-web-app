@@ -9,30 +9,24 @@ exports.getSubsection = function(req, res) {
       combinedRows.push(rows);
     })
     .then(
-      subsectionDAO
-        .getLawBySubsectionId(req.params.subsectionId)
-        .then(function(rows) {
-          combinedRows.push(rows);
-        })
+      subsectionDAO.getLawBySubsectionId(req.params.subsectionId).then(function(rows) {
+        combinedRows.push(rows);
+      })
     )
     .then(
-      subsectionDAO
-        .getRegulationBySubsectionId(req.params.subsectionId)
-        .then(function(rows) {
-          combinedRows.push(rows);
-        })
+      subsectionDAO.getRegulationBySubsectionId(req.params.subsectionId).then(function(rows) {
+        combinedRows.push(rows);
+      })
     )
     .then(
-      subsectionDAO
-        .getThemesBySubsectionId(req.params.subsectionId)
-        .then(function(rows) {
-          combinedRows.push(rows);
-          res.json(combinedRows);
-        })
-        .catch(function(err) {
-          res.sendStatus(500);
-          console.log(err.message);
-          return;
-        })
-    );
+      subsectionDAO.getThemesBySubsectionId(req.params.subsectionId).then(function(rows) {
+        combinedRows.push(rows);
+        res.json(combinedRows);
+      })
+    )
+    .catch(function(err) {
+      res.sendStatus(500);
+      console.log(err.message);
+      return;
+    });
 };

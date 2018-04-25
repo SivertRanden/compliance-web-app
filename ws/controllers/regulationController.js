@@ -10,16 +10,14 @@ exports.getRegulation = function(req, res) {
       combinedRows.push(rows);
     })
     .then(
-      regulationDao
-        .getSubsectionsByRegulationId(req.params.regulation_id)
-        .then(function(rows) {
-          combinedRows.push(rows);
-          res.json(combinedRows);
-        })
-        .catch(function(err) {
-          res.sendStatus(500);
-          console.log(err.message);
-          return;
-        })
-    );
+      regulationDao.getSubsectionsByRegulationId(req.params.regulation_id).then(function(rows) {
+        combinedRows.push(rows);
+        res.json(combinedRows);
+      })
+    )
+    .catch(function(err) {
+      res.sendStatus(500);
+      console.log(err.message);
+      return;
+    });
 };

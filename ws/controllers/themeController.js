@@ -25,37 +25,29 @@ exports.getThemeById = function(req, res) {
       combinedRows.push(rows);
     })
     .then(
-      themeDAO
-        .getLawsByThemeId(themeId)
-        .then(function(rows) {
-          combinedRows.push(rows);
-        })
-        .then(
-          themeDAO
-            .getRegulationsByThemeId(themeId)
-            .then(function(rows) {
-              combinedRows.push(rows);
-            })
-            .then(
-              themeDAO
-                .getAnswersByThemeId(themeId)
-                .then(function(rows) {
-                  combinedRows.push(rows);
-                })
-                .then(
-                  themeDAO
-                    .getImplementationsByThemeId(themeId)
-                    .then(function(rows) {
-                      combinedRows.push(rows);
-                      res.json(combinedRows);
-                    })
-                    .catch(function(err) {
-                      res.sendStatus(500);
-                      console.log(err.message);
-                      return;
-                    })
-                )
-            )
-        )
-    );
+      themeDAO.getLawsByThemeId(themeId).then(function(rows) {
+        combinedRows.push(rows);
+      })
+    )
+    .then(
+      themeDAO.getRegulationsByThemeId(themeId).then(function(rows) {
+        combinedRows.push(rows);
+      })
+    )
+    .then(
+      themeDAO.getAnswersByThemeId(themeId).then(function(rows) {
+        combinedRows.push(rows);
+      })
+    )
+    .then(
+      themeDAO.getImplementationsByThemeId(themeId).then(function(rows) {
+        combinedRows.push(rows);
+        res.json(combinedRows);
+      })
+    )
+    .catch(function(err) {
+      res.sendStatus(500);
+      console.log(err.message);
+      return;
+    });
 };
