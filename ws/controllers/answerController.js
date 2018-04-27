@@ -5,7 +5,11 @@ exports.getAnswer = async function(req, res) {
     let row = await answerDao.getAnswerById(req.params.answerId);
     res.json(row);
   } catch (err) {
-    res.sendStatus(404);
+    if (err.message === "INGEN ROWS") {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(500);
+    }
     console.log(err.message);
   }
   return;
