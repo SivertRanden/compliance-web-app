@@ -11,7 +11,6 @@ exports.getAnswer = async function(req, res) {
   return;
 };
 
-//DETTE MÅ FIKSES NÅR EG GIDDER!!!
 exports.getAnswersByParameter = async function(req, res) {
   if (req.query.categoryId && !req.query.themeId) {
     try {
