@@ -8,7 +8,7 @@ exports.getAnswerById = function(id) {
         if (err) {
           reject(err);
         } else if (!rows) {
-          reject(new Error("INGEN ROWS"));
+          reject(new Error("ROWS"));
         } else {
           resolve(rows);
         }
@@ -25,7 +25,7 @@ exports.getAnswersByCategoryId = function(id) {
         if (err) {
           reject(err);
         } else if (!rows) {
-          reject(new Error("INGEN ROWS"));
+          reject(new Error("ROWS"));
         } else {
           resolve(rows);
         }
@@ -46,7 +46,7 @@ exports.getAnswersByThemeId = function(id) {
           if (err) {
             reject(err);
           } else if (!rows) {
-            reject(new Error("INGEN ROWS"));
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }

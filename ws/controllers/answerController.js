@@ -5,7 +5,7 @@ exports.getAnswer = async function(req, res) {
     let row = await answerDao.getAnswerById(req.params.answerId);
     res.json(row);
   } catch (err) {
-    if (err.message === "INGEN ROWS") {
+    if (err.message === "ROWS") {
       res.sendStatus(404);
     } else {
       res.sendStatus(500);
@@ -21,7 +21,11 @@ exports.getAnswersByParameter = async function(req, res) {
       let rows = await answerDao.getAnswersByCategoryId(req.query.categoryId);
       res.json(rows);
     } catch (err) {
-      res.sendStatus(500);
+      if (err.message === "ROWS") {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(500);
+      }
       console.log(err.message);
     }
   } else if (req.query.themeId && !req.query.categoryId) {
@@ -29,7 +33,11 @@ exports.getAnswersByParameter = async function(req, res) {
       let rows = await answerDao.getAnswersByThemeId(req.query.themeId);
       res.json(rows);
     } catch (err) {
-      res.sendStatus(500);
+      if (err.message === "ROWS") {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(500);
+      }
       console.log(err.message);
     }
   } else {

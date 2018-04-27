@@ -5,7 +5,7 @@ exports.getCategories = async function(req, res) {
     let row = await categoryDao.getAllCategories();
     res.json(row);
   } catch (err) {
-    res.sendStatus(404);
+    res.sendStatus(500);
     console.log(err.message);
   }
   return;
