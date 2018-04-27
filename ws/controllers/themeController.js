@@ -25,7 +25,11 @@ exports.getThemeById = async function(req, res) {
     combinedRows.push(await themeDAO.getImplementationsByThemeId(themeId));
     res.json(combinedRows);
   } catch (err) {
-    res.sendStatus(500);
+    if (err.message === "ROWS") {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(500);
+    }
     console.log(err.message);
   }
   return;

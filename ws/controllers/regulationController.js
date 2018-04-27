@@ -10,7 +10,11 @@ exports.getRegulation = async function(req, res) {
     combinedRows.push(await regulationDao.getSubsectionsByRegulationId(req.params.regulation_id));
     res.json(combinedRows);
   } catch (err) {
-    res.sendStatus(404);
+    if (!rows) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(500);
+    }
     console.log(err.message);
   }
 

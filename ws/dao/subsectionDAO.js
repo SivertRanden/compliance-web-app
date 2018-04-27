@@ -9,8 +9,10 @@ exports.getSubsectionByID = function(id) {
       db.get(
         "SELECT * FROM sub_section as s WHERE s.id_sub_section = " + escape(id),
         (err, row) => {
-          if (err || !row) {
-            reject(new Error("DAO ERROR"));
+          if (err) {
+            reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(row);
           }

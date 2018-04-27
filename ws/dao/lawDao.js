@@ -22,7 +22,7 @@ exports.getLawById = function(id) {
       db.get("SELECT * FROM law WHERE id_law = " + escape(id), (err, row) => {
         if (err) {
           reject(err);
-        } else if (!rows) {
+        } else if (!row) {
           reject(new Error("ROWS"));
         } else {
           resolve(row);
