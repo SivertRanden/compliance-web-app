@@ -5,47 +5,43 @@ exports.getAnswer = async function(req, res) {
     let row = await answerDao.getAnswerById(req.params.answerId);
     res.json(row);
   } catch (err) {
-    res.sendStatus(404);
+    if (err.message === "ROWS") {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(500);
+    }
     console.log(err.message);
   }
   return;
 };
 
-//DETTE MÅ FIKSES NÅR EG GIDDER!!!
-exports.getAnswersByParameter = function(req, res) {
+exports.getAnswersByParameter = async function(req, res) {
   if (req.query.categoryId && !req.query.themeId) {
-    answerDao
-      .getAnswersByCategoryId(req.query.categoryId)
-      .then(function(rows) {
-        if (!rows) {
-          res.send("Det finnes ingen svar i aktuell kategori.");
-          return;
-        } else {
-          res.json(rows);
-        }
-      })
-      .catch(function(err) {
+    try {
+      let rows = await answerDao.getAnswersByCategoryId(req.query.categoryId);
+      res.json(rows);
+    } catch (err) {
+      if (err.message === "ROWS") {
+        res.sendStatus(404);
+      } else {
         res.sendStatus(500);
-        console.log(err.message);
-        return;
-      });
+      }
+      console.log(err.message);
+    }
   } else if (req.query.themeId && !req.query.categoryId) {
-    answerDao
-      .getAnswersByThemeId(req.query.themeId)
-      .then(function(rows) {
-        if (!rows) {
-          res.send("Det finnes ingen svar i aktuelt tema");
-          return;
-        } else {
-          res.json(rows);
-        }
-      })
-      .catch(function(err) {
+    try {
+      let rows = await answerDao.getAnswersByThemeId(req.query.themeId);
+      res.json(rows);
+    } catch (err) {
+      if (err.message === "ROWS") {
+        res.sendStatus(404);
+      } else {
         res.sendStatus(500);
-        console.log(err.message);
-        return;
-      });
+      }
+      console.log(err.message);
+    }
   } else {
     res.sendStatus(404);
   }
+  return;
 };

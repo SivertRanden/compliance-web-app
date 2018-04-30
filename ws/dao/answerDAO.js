@@ -5,8 +5,10 @@ exports.getAnswerById = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.get("SELECT * FROM answer WHERE id_answer = " + escape(id), (err, rows) => {
-        if (err || !rows) {
-          reject(new Error("DAO ERROR"));
+        if (err) {
+          reject(err);
+        } else if (!rows) {
+          reject(new Error("ROWS"));
         } else {
           resolve(rows);
         }
@@ -22,6 +24,8 @@ exports.getAnswersByCategoryId = function(id) {
       db.all("SELECT * FROM answer WHERE category_id = " + escape(id), (err, rows) => {
         if (err) {
           reject(err);
+        } else if (!rows) {
+          reject(new Error("ROWS"));
         } else {
           resolve(rows);
         }
@@ -41,6 +45,8 @@ exports.getAnswersByThemeId = function(id) {
         (err, rows) => {
           if (err) {
             reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }

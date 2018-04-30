@@ -20,8 +20,10 @@ exports.getThemeById = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.get("SELECT * FROM theme WHERE id_theme = " + escape(id), (err, rows) => {
-        if (err || !rows) {
-          reject(new Error("DAO ERROR"));
+        if (err) {
+          reject(err);
+        } else if (!rows) {
+          reject(new Error("ROWS"));
         } else {
           resolve(rows);
         }

@@ -24,7 +24,11 @@ exports.getLaw = async function(req, res) {
     combinedRows.push(await lawDao.getSubsectionsByLawId(lawId));
     res.json(combinedRows);
   } catch (err) {
-    res.sendStatus(500);
+    if (err.message === "ROWS") {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(500);
+    }
     console.log(err.message);
   }
   return;
