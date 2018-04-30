@@ -1,42 +1,31 @@
 const lawDao = require("./../dao/lawDAO.js");
 
 //Gets all laws and sends all rows in response with JSON
-exports.getLaws = function(req, res) {
-  lawDao
-    .getAllLaws()
-    .then(function(rows) {
-      res.json(rows);
-    })
-    .catch(function(err) {
-      res.sendStatus(500);
-      console.log(err.message);
-      return;
-    });
+exports.getLaws = async function(req, res) {
+  try {
+    let rows = await lawDao.getAllLaws();
+    res.json(rows);
+  } catch (err) {
+    res.sendStatus(500);
+    console.log(err.message);
+  }
+  return;
 };
 
 //Gets the law with corresponding id, regulations with corresponding law id
 //and subsections with corresponding id
-exports.getLaw = function(req, res) {
+exports.getLaw = async function(req, res) {
   let combinedRows = [];
-  lawDao
-    .getLawById(req.params.lawId)
-    .then(function(row) {
-      combinedRows.push(row);
-    })
-    .then(
-      lawDao.getRegulationByLawId(req.params.lawId).then(function(rows) {
-        combinedRows.push(rows);
-      })
-    )
-    .then(
-      lawDao.getSubsectionsByLawId(req.params.lawId).then(function(rows) {
-        combinedRows.push(rows);
-        res.json(combinedRows);
-      })
-    )
-    .catch(function(err) {
-      res.sendStatus(500);
-      console.log(err.message);
-      return;
-    });
+  const lawId = req.params.lawId;
+
+  try {
+    combinedRows.push(await lawDao.getLawById(lawId));
+    combinedRows.push(await lawDao.getRegulationByLawId(lawId));
+    combinedRows.push(await lawDao.getSubsectionsByLawId(lawId));
+    res.json(combinedRows);
+  } catch (err) {
+    res.sendStatus(500);
+    console.log(err.message);
+  }
+  return;
 };

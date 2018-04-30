@@ -8,8 +8,8 @@ exports.getImplementationByThemeId = function(id) {
         "SELECT t.title, i.id_implementation, i.theme_id, i.challenge_given, i.deadline_input_ln, i.deadline_document, i.status_meeting_date, i.deadline_input_h, i.clarification_meeting_date, i.approved_upload_date FROM theme AS t, implementation AS i WHERE i.theme_id = " +
           escape(id),
         (err, rows) => {
-          if (err) {
-            reject(err.message);
+          if (err || !rows) {
+            reject(new Error("DAO ERROR"));
           } else {
             resolve(rows);
           }
