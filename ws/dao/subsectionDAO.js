@@ -6,18 +6,15 @@ const db = dao.connection;
 exports.getSubsectionByID = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.get(
-        "SELECT * FROM sub_section as s WHERE s.id_sub_section = " + escape(id),
-        (err, row) => {
-          if (err) {
-            reject(err);
-          } else if (!rows) {
-            reject(new Error("ROWS"));
-          } else {
-            resolve(row);
-          }
+      db.get("SELECT * FROM sub_section as s WHERE s.id_sub_section = ?", [id], (err, rows) => {
+        if (err) {
+          reject(err);
+        } else if (!rows) {
+          reject(new Error("ROWS"));
+        } else {
+          resolve(rows);
         }
-      );
+      });
     });
   });
 
