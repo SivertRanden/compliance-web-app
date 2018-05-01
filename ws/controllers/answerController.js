@@ -2,8 +2,8 @@ const answerDao = require("./../dao/answerDAO.js");
 
 exports.getAnswer = async function(req, res) {
   try {
-    let row = await answerDao.getAnswerById(req.params.answerId);
-    res.json(row);
+    let rows = await answerDao.getAnswerById(req.params.answerId);
+    res.json(rows);
   } catch (err) {
     if (err.message === "ROWS") {
       res.sendStatus(404);
@@ -15,33 +15,17 @@ exports.getAnswer = async function(req, res) {
   return;
 };
 
-exports.getAnswersByParameter = async function(req, res) {
-  if (req.query.categoryId && !req.query.themeId) {
-    try {
-      let rows = await answerDao.getAnswersByCategoryId(req.query.categoryId);
-      res.json(rows);
-    } catch (err) {
-      if (err.message === "ROWS") {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(500);
-      }
-      console.log(err.message);
+exports.getAnswersByCategoryId = async function(req, res) {
+  try {
+    let rows = await answerDao.getAnswersByCategoryId(req.params.categoryId);
+    res.json(rows);
+  } catch (err) {
+    if (err.message === "ROWS") {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(500);
     }
-  } else if (req.query.themeId && !req.query.categoryId) {
-    try {
-      let rows = await answerDao.getAnswersByThemeId(req.query.themeId);
-      res.json(rows);
-    } catch (err) {
-      if (err.message === "ROWS") {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(500);
-      }
-      console.log(err.message);
-    }
-  } else {
-    res.sendStatus(404);
+    console.log(err.message);
   }
   return;
 };

@@ -7,26 +7,29 @@ module.exports = function(app) {
   const themeController = require("../controllers/themeController");
   const implementationController = require("../controllers/implementationController");
 
-  //laws
+  //Laws
   app.route("/laws").get(lawController.getLaws);
   app.route("/laws/:lawId").get(lawController.getLaw);
 
   //Regulations
   app.route("/regulations/:regulation_id").get(regulationController.getRegulation);
 
+  //Subsections
+  app.route("/subsections/:subsectionId").get(subsectionController.getSubsection);
+
   //Categories
   app.route("/categories").get(categoryController.getCategories);
+  app.route("/categories/:categoryId/answers").get(answerController.getAnswersByCategoryId);
 
   //Answers
   app.route("/answers/:answerId").get(answerController.getAnswer);
-  app.route("/answers").get(answerController.getAnswersByParameter);
-
-  //Subsections
-  app.route("/subsections/:subsectionId").get(subsectionController.getSubsection);
 
   //Themes
   app.route("/themes").get(themeController.getThemes);
   app.route("/themes/:themeId").get(themeController.getThemeById);
+  app
+    .route("/themes/:themeId/laws/:lawId")
+    .get(themeController.getSubsectionsAndRegulationsByThemeIdAndLawId);
 
   //Implementations
   app.route("/implementations").get(implementationController.getImplementation);

@@ -34,24 +34,3 @@ exports.getAnswersByCategoryId = function(id) {
   });
   return promise;
 };
-
-exports.getAnswersByThemeId = function(id) {
-  var promise = new Promise(function(resolve, reject) {
-    db.serialize(() => {
-      db.all(
-        "SELECT a.* FROM answer as a, themes_answers as ta WHERE ta.theme_id = ? AND a.id_answer = ta.answer_id",
-        [id],
-        (err, rows) => {
-          if (err) {
-            reject(err);
-          } else if (!rows) {
-            reject(new Error("ROWS"));
-          } else {
-            resolve(rows);
-          }
-        }
-      );
-    });
-  });
-  return promise;
-};
