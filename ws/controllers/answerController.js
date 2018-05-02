@@ -16,9 +16,11 @@ exports.getAnswer = async function(req, res) {
 };
 
 exports.getAnswersByCategoryId = async function(req, res) {
+  let combinedRows = [];
   try {
-    let rows = await answerDao.getAnswersByCategoryId(req.params.categoryId);
-    res.json(rows);
+    combinedRows.push(await answerDao.getCategoryById(req.params.categoryId));
+    combinedRows.push(await answerDao.getAnswersByCategoryId(req.params.categoryId));
+    res.json(combinedRows);
   } catch (err) {
     if (err.message === "ROWS") {
       res.sendStatus(404);

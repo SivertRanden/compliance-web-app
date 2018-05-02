@@ -4,14 +4,12 @@ const db = dao.connection;
 exports.getImplementationByThemeId = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.get(
-        "SELECT t.title, i.* FROM theme AS t, implementation AS i WHERE i.theme_id = ?",
+      db.all(
+        "SELECT i.* FROM implementation as i, theme as t WHERE t.id_theme = ? AND t.id_theme = i.theme_id",
         [id],
         (err, rows) => {
           if (err) {
-            reject(error);
-          } else if (!rows) {
-            reject(new Error("ROWS"));
+            reject(err);
           } else {
             resolve(rows);
           }

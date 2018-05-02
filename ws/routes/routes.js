@@ -5,7 +5,6 @@ module.exports = function(app) {
   const answerController = require("../controllers/answerController");
   const subsectionController = require("../controllers/subsectionController");
   const themeController = require("../controllers/themeController");
-  const implementationController = require("../controllers/implementationController");
 
   //Laws
   app.route("/laws").get(lawController.getLaws);
@@ -29,8 +28,8 @@ module.exports = function(app) {
   app.route("/themes/:themeId").get(themeController.getThemeById);
   app
     .route("/themes/:themeId/laws/:lawId")
-    .get(themeController.getSubsectionsAndRegulationsByThemeIdAndLawId);
+    .get(themeController.getSubSectionsAndRegulationsByThemeIdAndLawId);
+  app.route("/themes/:themeId/regulations/:regulationId").get(themeController.getLawsAndSubSectionsByThemeIdAndRegulationId);
+  app.route("/themes/:themeId/implementation").get(themeController.getImplementationByThemeId);
 
-  //Implementations
-  app.route("/implementations").get(implementationController.getImplementation);
 };
