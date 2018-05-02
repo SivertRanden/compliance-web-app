@@ -33,7 +33,7 @@ exports.getLawById = function(id) {
   return promise;
 };
 
-exports.getRegulationByLawId = function(id) {
+exports.getRegulationsByLawId = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.all(

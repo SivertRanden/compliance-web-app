@@ -21,7 +21,7 @@ exports.getAnswerById = function(id) {
 exports.getCategoryById = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.all("SELECT * FROM category WHERE id_category = ?", [id], (err, rows) => {
+      db.get("SELECT * FROM category WHERE id_category = ?", [id], (err, rows) => {
         if (err) {
           reject(err);
         } else if (!rows) {

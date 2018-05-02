@@ -1,9 +1,9 @@
-const lawDao = require("./../dao/lawDAO.js");
+const lawDAO = require("./../dao/lawDAO.js");
 
 //Gets all laws and sends all rows in response with JSON
 exports.getLaws = async function(req, res) {
   try {
-    let rows = await lawDao.getAllLaws();
+    let rows = await lawDAO.getAllLaws();
     res.json(rows);
   } catch (err) {
     res.sendStatus(500);
@@ -19,9 +19,9 @@ exports.getLaw = async function(req, res) {
   const lawId = req.params.lawId;
 
   try {
-    combinedRows.push(await lawDao.getLawById(lawId));
-    combinedRows.push(await lawDao.getRegulationByLawId(lawId));
-    combinedRows.push(await lawDao.getSubsectionsByLawId(lawId));
+    combinedRows.push(await lawDAO.getLawById(lawId));
+    combinedRows.push(await lawDAO.getRegulationsByLawId(lawId));
+    combinedRows.push(await lawDAO.getSubsectionsByLawId(lawId));
     res.json(combinedRows);
   } catch (err) {
     if (err.message === "ROWS") {
