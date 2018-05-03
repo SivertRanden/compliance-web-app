@@ -42,6 +42,8 @@ exports.getLawsByThemeId = function(id) {
         (err, rows) => {
           if (err) {
             reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }
@@ -61,6 +63,8 @@ exports.getRegulationsByThemeId = function(id) {
         (err, rows) => {
           if (err) {
             reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }
@@ -80,6 +84,8 @@ exports.getAnswersByThemeId = function(id) {
         (err, rows) => {
           if (err) {
             reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }
@@ -99,6 +105,8 @@ exports.getRegulationsByThemeIdAndLawId = function(themeId, lawId) {
         (err, rows) => {
           if (err) {
             reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }
@@ -118,6 +126,8 @@ exports.getSubsectionsByThemeIdAndLawId = function(themeId, lawId) {
         (err, rows) => {
           if (err) {
             reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }
@@ -137,6 +147,8 @@ exports.getLawsByThemeIdAndRegulationId = function(themeId, regulationId) {
         (err, rows) => {
           if (err) {
             reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }
@@ -156,6 +168,8 @@ exports.getSubSectionsByThemeIdAndRegulationId = function(themeId, regulationId)
         (err, rows) => {
           if (err) {
             reject(err);
+          } else if (!rows) {
+            reject(new Error("ROWS"));
           } else {
             resolve(rows);
           }
