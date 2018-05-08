@@ -1,6 +1,7 @@
 const themeDAO = require("./../dao/themeDAO.js");
 const implementationDAO = require("./../dao/implementationDAO.js");
 const lawDAO = require("./../dao/lawDAO");
+const regulationDAO = require("./../dao/regulationDAO");
 
 //Gets all themes and sends all rows in response with JSON
 exports.getThemes = async function(req, res) {
@@ -87,6 +88,8 @@ exports.getLawsAndSubSectionsByThemeIdAndRegulationId = async function(req, res)
   let combinedRows = [];
 
   try {
+    combinedRows.push(await themeDAO.getThemeById(themeId));
+    combinedRows.push(await regulationDAO.getRegulationById(regulationId));
     combinedRows.push(await themeDAO.getLawsByThemeIdAndRegulationId(themeId, regulationId));
     combinedRows.push(await themeDAO.getSubSectionsByThemeIdAndRegulationId(themeId, regulationId));
     res.json(combinedRows);
