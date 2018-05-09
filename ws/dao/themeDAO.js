@@ -100,7 +100,7 @@ exports.getRegulationsByThemeIdAndLawId = function(themeId, lawId) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.all(
-        "SELECT r.* FROM regulation as r, theme as t, regulations_sub_sections as rs, themes_sub_sections as ts, law as l, laws_regulations as lr WHERE t.id_theme = ? AND r.id_regulation = rs.regulation_id AND ts.theme_id = t.id_theme AND rs.sub_section_id = ts.sub_section_id AND l.id_law = ? AND l.id_law = lr.law_id AND r.id_regulation = lr.regulation_id",
+        "SELECT DISTINCT r.* FROM regulation as r, theme as t, regulations_sub_sections as rs, themes_sub_sections as ts, law as l, laws_regulations as lr WHERE t.id_theme = ? AND r.id_regulation = rs.regulation_id AND ts.theme_id = t.id_theme AND rs.sub_section_id = ts.sub_section_id AND l.id_law = ? AND l.id_law = lr.law_id AND r.id_regulation = lr.regulation_id",
         [themeId, lawId],
         (err, rows) => {
           if (err) {
@@ -121,7 +121,7 @@ exports.getSubsectionsByThemeIdAndLawId = function(themeId, lawId) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.all(
-        "SELECT s.* FROM sub_section as s, theme as t, themes_sub_sections as ts, law as l, laws_sub_sections as ls WHERE t.id_theme = ? AND s.id_sub_section = ts.sub_section_id AND ts.theme_id = t.id_theme AND l.id_law = ? AND l.id_law = ls.law_id AND s.id_sub_section = ls.sub_section_id",
+        "SELECT DISTINCT s.* FROM sub_section as s, theme as t, themes_sub_sections as ts, law as l, laws_sub_sections as ls WHERE t.id_theme = ? AND s.id_sub_section = ts.sub_section_id AND ts.theme_id = t.id_theme AND l.id_law = ? AND l.id_law = ls.law_id AND s.id_sub_section = ls.sub_section_id",
         [themeId, lawId],
         (err, rows) => {
           if (err) {
@@ -142,7 +142,7 @@ exports.getLawsByThemeIdAndRegulationId = function(themeId, regulationId) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.all(
-        "SELECT DISTINCT l.* FROM law as l, regulation as r, laws_regulations as lr, sub_section as s, laws_sub_sections as ls, theme as t, themes_sub_sections as ts, regulations_sub_sections as rs WHERE t.id_theme = ? AND r.id_regulation = ? AND t.id_theme = ts.theme_id AND ts.sub_section_id = s.id_sub_section AND s.id_sub_section = rs.sub_section_id AND rs.regulation_id = r.id_regulation AND r.id_regulation = lr.regulation_id AND lr.law_id = l.id_law",
+        "SELECT DISTINCT l.* FROM law as l, regulation as r, laws_regulations as lr, sub_section as s, laws_sub_sections as ls, theme as t, themes_sub_sections as ts, regulations_sub_sections as rs WHERE t.id_theme = ? AND r.id_regulation = ? AND t.id_theme = ts.theme_id AND ts.sub_section_id = s.id_sub_section AND r.id_regulation = lr.regulation_id AND lr.law_id = l.id_law",
         [themeId, regulationId],
         (err, rows) => {
           if (err) {
@@ -163,7 +163,7 @@ exports.getSubSectionsByThemeIdAndRegulationId = function(themeId, regulationId)
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.all(
-        "SELECT s.* FROM sub_section as s, regulation as r, regulations_sub_sections as rs, theme as t, themes_sub_sections as ts WHERE t.id_theme = ? AND r.id_regulation = ? AND s.id_sub_section = rs.sub_section_id AND r.id_regulation = rs.regulation_id AND t.id_theme = ts.theme_id AND s.id_sub_section = ts.sub_section_id",
+        "SELECT DISTINCT s.* FROM sub_section as s, regulation as r, regulations_sub_sections as rs, theme as t, themes_sub_sections as ts WHERE t.id_theme = ? AND r.id_regulation = ? AND s.id_sub_section = rs.sub_section_id AND r.id_regulation = rs.regulation_id AND t.id_theme = ts.theme_id AND s.id_sub_section = ts.sub_section_id",
         [themeId, regulationId],
         (err, rows) => {
           if (err) {
