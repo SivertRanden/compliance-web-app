@@ -79,7 +79,7 @@ exports.getAnswersByThemeId = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.all(
-        "SELECT a.* FROM answer as a, themes_answers as ta WHERE ta.theme_id = ? AND a.id_answer = ta.answer_id",
+        "SELECT a.*, c.title as category_title FROM answer as a, category as c, themes_answers as ta WHERE ta.theme_id = ? AND a.id_answer = ta.answer_id AND a.category_id = c.id_category",
         [id],
         (err, rows) => {
           if (err) {
