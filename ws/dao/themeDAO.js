@@ -142,7 +142,7 @@ exports.getLawsByThemeIdAndRegulationId = function(themeId, regulationId) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.all(
-        "SELECT DISTINCT l.* FROM law as l, regulation as r, laws_regulations as lr, sub_section as s, laws_sub_sections as ls, theme as t, themes_sub_sections as ts, regulations_sub_sections as rs WHERE t.id_theme = ? AND r.id_regulation = ? AND t.id_theme = ts.theme_id AND ts.sub_section_id = s.id_sub_section AND s.id_sub_section = ls.sub_section_id AND ls.law_id = l.id_law AND r.id_regulation = lr.regulation_id AND lr.law_id = l.id_law",
+        "SELECT DISTINCT l.* FROM law as l, regulation as r, laws_regulations as lr, sub_section as s, laws_sub_sections as ls, theme as t, themes_sub_sections as ts, regulations_sub_sections as rs WHERE t.id_theme = ? AND t.id_theme = ts.theme_id AND ts.sub_section_id = s.id_sub_section AND s.id_sub_section = ls.sub_section_id AND ls.law_id = l.id_law AND l.id_law = lr.law_id AND lr.regulation_id = r.id_regulation AND r.id_regulation = ? AND r.id_regulation = rs.regulation_id AND rs.sub_section_id = s.id_sub_section",
         [themeId, regulationId],
         (err, rows) => {
           if (err) {
