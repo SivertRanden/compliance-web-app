@@ -25,7 +25,7 @@ exports.getRegulationById = function(id) {
 exports.getLawByRegulationId = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
-      db.get(
+      db.all(
         "SELECT l.* FROM law AS l, regulation AS r, laws_regulations AS lr WHERE r.id_regulation = ? AND lr.law_id = l.id_law AND lr.regulation_id = r.id_regulation",
         [id],
         (err, rows) => {
