@@ -5,7 +5,7 @@ exports.getImplementationByThemeId = function(id) {
   var promise = new Promise(function(resolve, reject) {
     db.serialize(() => {
       db.get(
-        "SELECT i.* FROM implementation as i, theme as t WHERE t.id_theme = ? AND t.id_theme = i.theme_id",
+        "SELECT i.*, t.title AS themeTitle FROM implementation as i, theme as t WHERE t.id_theme = ? AND t.id_theme = i.theme_id",
         [id],
         (err, rows) => {
           if (err) {
