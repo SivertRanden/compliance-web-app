@@ -7,10 +7,11 @@ exports.getRegulation = async function(req, res) {
 
   try {
     combinedRows.push(await regulationDao.getRegulationById(req.params.regulation_id));
+    combinedRows.push(await regulationDao.getLawByRegulationId(req.params.regulation_id));
     combinedRows.push(await regulationDao.getSubsectionsByRegulationId(req.params.regulation_id));
     res.json(combinedRows);
   } catch (err) {
-    if (!rows) {
+    if (err.message === "ROWS") {
       res.sendStatus(404);
     } else {
       res.sendStatus(500);
